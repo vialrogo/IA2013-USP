@@ -5,20 +5,20 @@ Repository for control of the IA study group activities.
 
 
 Goals:
-  - Study and approve IA (USP 2013) of corse
-  - Write all code in english (varg: i think that it will be cool :) )
-  - Do exercises early for the test
-  - Generate some of pression about the course ;)
+  - Study and approve IA (USP 2013), of course
+  - Write all code in english (varg: i think that will be cool :) )
+  - Do exercises as soon as possible
+  - Generate some of the pression about the course ;)
 
-Ideas
-  - Do exercises and solve questions in agreement with the class
-  - Make a easy programming exercise, implementing all the search algorithms (it's still an idea)
+Ideas:
+  - Do exercises and solve questions according to the classes
+  - Make an easy programming exercise, implementing all the search algorithms (it's still an idea).
 
 Restrictions
-  - Because it's likely that this code will be used to the Eps, will be write in C++
-  - If for didactic propouse is necesary the use of graphics interfaces, will use QT, leave it very 
-    modular (case we will can not use QT in the EPs)
-  - Neither is pressent homework to somebody, its only refer material. If somebody doesn't have time,
-    or somthing, it's ok
+  - As it's likely that this code will be used to the Eps, it must be written in C++
+  - If, for didactic reasons, it's necessary to use graphics interfaces, we'll use QT, making it very 
+    modular (just in case we can't use QT in the EPs)
+  - This is no homework to anybody, it's only reference material. If we ca't work on it,
+    or something else, it's ok.
 
 Enjoy!
