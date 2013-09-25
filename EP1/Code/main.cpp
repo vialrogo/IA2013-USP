@@ -11,6 +11,7 @@
 
 #include<iostream>
 #include <stdio.h>
+#include "environment.h"
 
 using namespace std;
 
@@ -58,14 +59,7 @@ int main(int argc, char *argv[])
     readInputFile(inputFileName, matrix, n);
                     
     // Processing
-    cout<<"The read data was:"<<endl<<endl;
-    cout<<n<<endl;
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<n; j++) {
-            cout<<matrix[i][j]<<" ";
-        }
-        cout<<endl;
-    }
+    Environment* env = new Environment(matrix, n);
 
     return 0;
 }

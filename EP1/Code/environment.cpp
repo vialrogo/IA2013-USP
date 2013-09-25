@@ -10,3 +10,13 @@
 */
 
 #include "environment.h"
+
+Environment::Environment(char** mapIn, int sizeIn)
+{
+    map = mapIn;
+    size = sizeIn;
+}
+
+Environment::~Environment()
+{
+}
