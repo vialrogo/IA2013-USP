@@ -1,6 +1,6 @@
 /* IME-USP
 ** Mestrado em Ciência da Computação
-** Disciplina: Inteligência Atificial
+** Disciplina: Inteligência Artificial
 ** Exercício-Programa 1 (Busca Informada)
 ** Alunos: 
 ** 	Monna Cleide Santos - n. USP 8477852
