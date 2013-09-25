@@ -9,19 +9,19 @@
 ** 27 de setembro de 2013
 */
 
-#include "agente.h"
+#include "agent.h"
 
-string Agente::widthSearch (char** Matrix, int matrixSize, int nuggetCount) {
+string Agent::widthSearch (char** Matrix, int matrixSize, int nuggetCount) {
+	//This function implements the width-search methods.
+    return "";
+}
+
+string Agent::iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount) {
 	//This function implements...
     return "";
 }
 
-string Agente::iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount) {
-	//This function implements...
-    return "";
-}
-
-string Agente::aStarSearch (char** Matrix, int matrixSize, int nuggetCount) {
+string Agent::aStarSearch (char** Matrix, int matrixSize, int nuggetCount) {
     //This function implements... 
     return "";
 }

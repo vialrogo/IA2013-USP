@@ -9,14 +9,14 @@
 ** 27 de setembro de 2013
 */
 
-#ifndef AGENTE_H
-#define AGENTE_H
+#ifndef AGENT_H
+#define AGENT_H
 
 #include <string>
 
 using namespace std;
 
-class Agente
+class Agent
 {
 private:
 
@@ -26,4 +26,4 @@ public:
     string aStarSearch (char** Matrix, int matrixSize, int nuggetCount);
 };
 
-#endif // AGENTE_H
+#endif // AGENT_H
