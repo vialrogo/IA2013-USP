@@ -108,7 +108,7 @@ void graphicSolution(string solution, char** matrix, int n, bool color)
     //The idea is graphic the moviment :)
     int xAgent=0;
     int yAgent=0;
-    int usteepTime=200000;
+    int usteepTime=100000;
 
     system("clear");
     printMatrixWithAgent(matrix, n, xAgent, yAgent, color);
@@ -134,9 +134,11 @@ void graphicSolution(string solution, char** matrix, int n, bool color)
 int main(int argc, char *argv[])
 {
     int n;
+    bool color=false;
     char** matrix;
     char* inputFileName;
     string extraOption(" ");
+    string colorOption(" ");
     string algorithmOption;
 
     // Correct number of parameters?
@@ -149,16 +151,21 @@ int main(int argc, char *argv[])
     algorithmOption = argv[2];
     readInputFile(inputFileName, matrix, n);
 
-    //Only one more action: --i
-    if(argc==4)
+    //Fix this!!! options in any order
+    if(argc>3)
         extraOption = argv[3];
-    
+    if(argc>4)
+        colorOption = argv[4];
+   
+    if(colorOption == "--color")
+        color=true;
+
     // Processing
     Environment* env = new Environment(matrix, n);
     string solution = env->solveEnvironment(1);
 
     if(extraOption=="--i")
-        graphicSolution(solution, matrix, n, true); //Still no color chose!
+        graphicSolution(solution, matrix, n, color);
     else
         printSolution(solution, n);
 
