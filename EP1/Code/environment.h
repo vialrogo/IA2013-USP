@@ -12,6 +12,10 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
+#include <string>
+
+using namespace std;
+
 class Environment
 {
 private:
@@ -20,6 +24,7 @@ private:
 public:
     Environment(char** mapIn, int sizeIn);
     ~Environment();
+    string solveEnvironment(int typeOfAlgorithm);
 };
 
 #endif // ENVIRONMENT_H

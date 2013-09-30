@@ -3,8 +3,8 @@
 ** Disciplina: Inteligência Artificial
 ** Exercício-Programa 1 (Busca Informada)
 ** Alunos: 
-** 		Monna Cleide Santos - n. USP 8477852
-** 		Victor Alberto Romero - n. USP XXXXXXX
+** 		Monna Cleide Santos   - n. USP 8477852
+** 		Victor Alberto Romero - n. USP 8405274
 **
 ** 27 de setembro de 2013
 */
@@ -20,3 +20,9 @@ Environment::Environment(char** mapIn, int sizeIn)
 Environment::~Environment()
 {
 }
+
+string Environment::solveEnvironment(int typeOfAlgorithm)
+{
+    return string("DDDBBEEEBPDBDDDDCCCCDDPEEBBBDDBBBBPCCCEEEEBBDDPEECCEECCDDCCEEE");
+}
+
