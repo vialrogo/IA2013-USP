@@ -67,31 +67,43 @@ void printSolution(string solution, int n)
     cout<<endl;
 }
 
-void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent)
+void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool color)
 {
+    string console = "";
+    string agent   = "@";
+    string nugget  = "*";
+    string wall    = "#";
+    string path    = " ";
+
+    if(color)
+    {
+        console = "\033[0m";
+        agent   = "\033[0m\033[1;32m@";
+        nugget  = "\033[0m\033[1;34m*";
+        wall    = "\033[0m\033[43m ";
+        path    = "\033[0m ";
+    }
+
     for(int i=0; i<n; i++)
     {
         for(int j=0; j<n; j++)
         {
             if(i==xAgent && j==yAgent)
-            {
-                cout<<"@";
-            }
+                cout<<agent;
             else
             {
-                if(matrix[i][j]=='0')
-                    cout<<' ';
-                if(matrix[i][j]=='1')
-                    cout<<'#';
-                if(matrix[i][j]=='*')
-                    cout<<'*';
+                if(matrix[i][j]=='0') cout<<path;
+                if(matrix[i][j]=='1') cout<<wall;
+                if(matrix[i][j]=='*') cout<<nugget;
             }
         }
+        cout<<console;
         cout<<endl;
     }
+    cout<<console;
 }
 
-void graphicSolution(string solution, char** matrix, int n)
+void graphicSolution(string solution, char** matrix, int n, bool color)
 {
     //The idea is graphic the moviment :)
     int xAgent=0;
@@ -99,7 +111,7 @@ void graphicSolution(string solution, char** matrix, int n)
     int usteepTime=200000;
 
     system("clear");
-    printMatrixWithAgent(matrix, n, xAgent, yAgent);
+    printMatrixWithAgent(matrix, n, xAgent, yAgent, color);
     usleep(usteepTime);
 
     for(int i=0; i< solution.size(); i++)
@@ -111,7 +123,7 @@ void graphicSolution(string solution, char** matrix, int n)
         if(solution[i]=='P') matrix[xAgent][yAgent]='0';
 
         system("clear");
-        printMatrixWithAgent(matrix, n, xAgent, yAgent);
+        printMatrixWithAgent(matrix, n, xAgent, yAgent, color);
         usleep(usteepTime);
     }
 
@@ -146,7 +158,7 @@ int main(int argc, char *argv[])
     string solution = env->solveEnvironment(1);
 
     if(extraOption=="--i")
-        graphicSolution(solution, matrix, n);
+        graphicSolution(solution, matrix, n, true); //Still no color chose!
     else
         printSolution(solution, n);
 
