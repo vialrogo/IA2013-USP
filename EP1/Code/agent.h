@@ -13,6 +13,8 @@
 #define AGENT_H
 
 #include <string>
+#include <queue>
+#include "node.h"
 
 using namespace std;
 
@@ -21,9 +23,10 @@ class Agent
 private:
 
 public:
-    string widthSearch (char** Matrix, int matrixSize, int nuggetCount);
-    string iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount);
-    string aStarSearch (char** Matrix, int matrixSize, int nuggetCount);
+    string widthSearch (char** Matrix, int matrixSize, int nuggetsIHave);
+    string iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetsIHave);
+    string aStarSearch (char** Matrix, int matrixSize, int nuggetsIHave);
+    bool isNodeASolution (node, );
 };
 
 #endif // AGENT_H

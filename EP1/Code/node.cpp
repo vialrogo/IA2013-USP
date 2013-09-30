@@ -8,3 +8,18 @@
 **
 ** 27 de setembro de 2013
 */ 
+
+#include "node.h"
+
+// construct
+Node::Node(char** matrixIn, int matrixSizeIn, int agentOnXIn, int agentOnYIn) {
+	matrix = matrixIn;
+	matrixSize = matrixSizeIn;
+	agentOnX = agentOnXIn;
+	agentOnY = agentOnYIn;
+}
+
+// destruct
+Node::~Node() {
+	
+}

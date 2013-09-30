@@ -19,11 +19,12 @@ using namespace std;
 class Node
 {
 private:
+	char** matrix;
+	int matrixSize, agentOnX, agentOnY;
 
 public:
-    string widthSearch (char** Matrix, int matrixSize, int nuggetCount);
-    string iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount);
-    string aStarSearch (char** Matrix, int matrixSize, int nuggetCount);
+	Node(char** matrixIn, int matrixSizeIn, int agentOnXIn, int agentOnYIn);
+	~Node();
 };
 
 #endif // NODE_H

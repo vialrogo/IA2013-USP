@@ -13,7 +13,22 @@
 
 string Agent::widthSearch (char** Matrix, int matrixSize, int nuggetCount) {
 	//This function implements the width-search methods.
-    return "";
+
+	queue<Node*>* nodeQueue = new queue<Node*>();
+	Node* firstNode = new Node(Matrix, matrixSize, 0, 0);
+	nodeQueue->push(firstNode);
+
+	while(!nodeQueue->empty()) {
+		// "catching" the top element of the queue
+		Node* nodeCatcher = nodeQueue->front();
+		nodeQueue->pop();
+
+		if (nuggetCount)		
+
+
+
+	}
+
 }
 
 string Agent::iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount) {
