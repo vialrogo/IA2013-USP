@@ -18,6 +18,30 @@
 
 using namespace std;
 
+//################ Color definitions #######################//
+const string consoleReset     = "\033[0m";
+
+// Color bold
+const string blackBold  = "\033[1;30m";
+const string redBold    = "\033[1;31m";
+const string greenBold  = "\033[1;32m";
+const string yellowBold = "\033[1;33m";
+const string blueBold   = "\033[1;34m";
+const string purpleBold = "\033[1;35m";
+const string cyanBold   = "\033[1;36m";
+const string grayBold   = "\033[1;37m";
+
+// Background color
+const string blackBackground  = "\033[40m";
+const string redBackground    = "\033[41m";
+const string greenBackground  = "\033[42m";
+const string yellowBackground = "\033[43m";
+const string blueBackground   = "\033[44m";
+const string purpleBackground = "\033[45m";
+const string cyanBackground   = "\033[46m";
+const string grayBackground   = "\033[47m";
+//##########################################################//
+
 void readInputFile(char* inputFileName, char** &matrix, int &n)
 {
     FILE* fileIn = fopen (inputFileName, "r");
@@ -77,11 +101,11 @@ void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool col
 
     if(color)
     {
-        console = "\033[0m";
-        agent   = "\033[0m\033[1;32m@";
-        nugget  = "\033[0m\033[1;34m*";
-        wall    = "\033[0m\033[43m ";
-        path    = "\033[0m ";
+        console = consoleReset;
+        agent   = consoleReset + cyanBold + "@";
+        nugget  = consoleReset + greenBold + "*";
+        wall    = consoleReset + grayBackground + " ";
+        path    = consoleReset + " ";
     }
 
     for(int i=0; i<n; i++)
