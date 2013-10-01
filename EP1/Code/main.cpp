@@ -44,9 +44,8 @@ const string grayBackground   = "\033[47m";
 
 void readInputFile(char* inputFileName, char** &matrix, int &n)
 {
+    char c;
     FILE* fileIn = fopen (inputFileName, "r");
-    
-    // Read
     fscanf (fileIn, "%d", &n);
 
     //Inialize matrix
@@ -54,11 +53,11 @@ void readInputFile(char* inputFileName, char** &matrix, int &n)
     for (int i=0; i<n; i++)
         matrix[i] = new char[n];
 
-    char c;
     fscanf (fileIn, "%c", &c); //Because linebreak
-    
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<n; j++){ 
+    for(int i=0; i<n; i++)
+    {
+        for(int j=0; j<n; j++)
+        { 
             fscanf (fileIn, "%c", &c);
             matrix[i][j]=c;
         }
@@ -75,7 +74,7 @@ void printSolution(string solution, int n)
     int steps=0;
     int nuggets=0;
 
-    for(int i=0; i<solution.size(); i++)
+    for(int i=0; i<solution.size(); i++) //Count nuggets and steps
     {
         if(solution[i]!='P')
             steps++;
@@ -100,7 +99,7 @@ void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool col
     string limit   = "$";
     string path    = " ";
 
-    if(color)
+    if(color) //Define the string in color choise
     {
         console = consoleReset;
         agent   = consoleReset + cyanBold + "@";
@@ -110,17 +109,15 @@ void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool col
         path    = consoleReset + " ";
     }
 
-    for(int i=-1; i<=n; i++)
+    for(int i=-1; i<=n; i++)// -1 to n because the print of border
     {
-        for(int j=-1; j<=n; j++)
+        for(int j=-1; j<=n; j++)// -1 to n because the print of border
         {
-            if(i<0 || j<0 || i==n || j==n)
-            {
+            if(i<0 || j<0 || i==n || j==n) //if it's in the border
                 cout<<limit;
-            }
             else
             {
-                if(i==xAgent && j==yAgent)
+                if(i==xAgent && j==yAgent) //print the agent position
                     cout<<agent;
                 else
                 {
@@ -130,36 +127,31 @@ void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool col
                 }
             }
         }
-        cout<<console;
-        cout<<endl;
+        cout<<console<<endl; //print the linebreaak
     }
-    cout<<console;
 }
 
 void graphicSolution(string solution, char** matrix, int n, bool color)
 {
-    //The idea is graphic the moviment :)
     int xAgent=0;
     int yAgent=0;
     int usteepTime=100000;
 
-    system("clear");
-    printMatrixWithAgent(matrix, n, xAgent, yAgent, color);
-    usleep(usteepTime);
-
-    for(int i=0; i< solution.size(); i++)
+    for(int i=0; i<= solution.size(); i++) //print the moviments and initial state
     {
-        if(solution[i]=='D') yAgent++;
-        if(solution[i]=='E') yAgent--;
-        if(solution[i]=='C') xAgent--;
-        if(solution[i]=='B') xAgent++;
-        if(solution[i]=='P') matrix[xAgent][yAgent]='0';
-
         system("clear");
         printMatrixWithAgent(matrix, n, xAgent, yAgent, color);
         usleep(usteepTime);
+       
+        if(i<solution.size())//if has more moviments
+        {
+            if(solution[i]=='D') yAgent++;
+            if(solution[i]=='E') yAgent--;
+            if(solution[i]=='C') xAgent--;
+            if(solution[i]=='B') xAgent++;
+            if(solution[i]=='P') matrix[xAgent][yAgent]='0';//delete the nugget
+        }
     }
-
     cout<<endl;
     printSolution(solution,n);
 }
@@ -171,31 +163,30 @@ int main(int argc, char *argv[])
     bool graphic=false;
     char** matrix;
     char* inputFileName;
-    string extraOption(" ");
-    string colorOption(" ");
     string algorithmOption;
 
-    // Correct number of parameters?
+    // Minimum number of parameters?
     if(argc<3)
     {
-        printf("Incorrect number of parameters!\n");
+        printf("Don't have the minimum  number of parameters!\n");
         return 1;
     }
     inputFileName   = argv[1];
     algorithmOption = argv[2];
     readInputFile(inputFileName, matrix, n);
 
-    //Fix this!!! options in any order
-    if(argc>3) extraOption = argv[3];
-    if(argc>4) colorOption = argv[4];
-    
-    if(colorOption == "--c") color=true;
-    if(extraOption == "--i") graphic=true;
+    // Extra options
+    for(int i=3; i<argc; i++)
+    {
+        if(string(argv[i]) == "--c") color=true;
+        if(string(argv[i]) == "--g") graphic=true;
+    }
 
     // Processing
     Environment* env = new Environment(matrix, n);
     string solution = env->solveEnvironment(1);
 
+    // Print the solution
     if(graphic) graphicSolution(solution, matrix, n, color);
     else        printSolution(solution, n);
 
