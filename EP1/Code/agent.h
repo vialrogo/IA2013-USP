@@ -23,10 +23,10 @@ class Agent
 private:
 
 public:
-    string widthSearch (char** Matrix, int matrixSize, int nuggetsIHave);
-    string iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetsIHave);
-    string aStarSearch (char** Matrix, int matrixSize, int nuggetsIHave);
-    bool isNodeASolution (node, );
+    string widthSearch (char** Matrix, int matrixSize, int nuggetCount);
+    string iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount);
+    string aStarSearch (char** Matrix, int matrixSize, int nuggetCount);
+    bool isNodeASolution (Node node);
 };
 
 #endif // AGENT_H

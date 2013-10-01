@@ -23,9 +23,7 @@ string Agent::widthSearch (char** Matrix, int matrixSize, int nuggetCount) {
 		Node* nodeCatcher = nodeQueue->front();
 		nodeQueue->pop();
 
-		if (nuggetCount)		
-
-
+		// if (nuggetCount)
 
 	}
 
