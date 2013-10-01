@@ -97,28 +97,37 @@ void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool col
     string agent   = "@";
     string nugget  = "*";
     string wall    = "#";
+    string limit   = "$";
     string path    = " ";
 
     if(color)
     {
         console = consoleReset;
         agent   = consoleReset + cyanBold + "@";
-        nugget  = consoleReset + greenBold + "*";
+        nugget  = consoleReset + redBold + "*";
         wall    = consoleReset + grayBackground + " ";
+        limit   = consoleReset + blueBackground + " ";
         path    = consoleReset + " ";
     }
 
-    for(int i=0; i<n; i++)
+    for(int i=-1; i<=n; i++)
     {
-        for(int j=0; j<n; j++)
+        for(int j=-1; j<=n; j++)
         {
-            if(i==xAgent && j==yAgent)
-                cout<<agent;
+            if(i<0 || j<0 || i==n || j==n)
+            {
+                cout<<limit;
+            }
             else
             {
-                if(matrix[i][j]=='0') cout<<path;
-                if(matrix[i][j]=='1') cout<<wall;
-                if(matrix[i][j]=='*') cout<<nugget;
+                if(i==xAgent && j==yAgent)
+                    cout<<agent;
+                else
+                {
+                    if(matrix[i][j]=='0') cout<<path;
+                    if(matrix[i][j]=='1') cout<<wall;
+                    if(matrix[i][j]=='*') cout<<nugget;
+                }
             }
         }
         cout<<console;
@@ -159,6 +168,7 @@ int main(int argc, char *argv[])
 {
     int n;
     bool color=false;
+    bool graphic=false;
     char** matrix;
     char* inputFileName;
     string extraOption(" ");
@@ -176,22 +186,18 @@ int main(int argc, char *argv[])
     readInputFile(inputFileName, matrix, n);
 
     //Fix this!!! options in any order
-    if(argc>3)
-        extraOption = argv[3];
-    if(argc>4)
-        colorOption = argv[4];
-   
-    if(colorOption == "--color")
-        color=true;
+    if(argc>3) extraOption = argv[3];
+    if(argc>4) colorOption = argv[4];
+    
+    if(colorOption == "--c") color=true;
+    if(extraOption == "--i") graphic=true;
 
     // Processing
     Environment* env = new Environment(matrix, n);
     string solution = env->solveEnvironment(1);
 
-    if(extraOption=="--i")
-        graphicSolution(solution, matrix, n, color);
-    else
-        printSolution(solution, n);
+    if(graphic) graphicSolution(solution, matrix, n, color);
+    else        printSolution(solution, n);
 
     return 0;
 }
