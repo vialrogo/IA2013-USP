@@ -159,11 +159,11 @@ void graphicSolution(string solution, char** matrix, int n, bool color)
 int main(int argc, char *argv[])
 {
     int n;
+    int algorithmOption;
     bool color=false;
     bool graphic=false;
     char** matrix;
     char* inputFileName;
-    string algorithmOption;
 
     // Minimum number of parameters?
     if(argc<3)
@@ -171,9 +171,15 @@ int main(int argc, char *argv[])
         printf("Don't have the minimum  number of parameters!\n");
         return 1;
     }
-    inputFileName   = argv[1];
-    algorithmOption = argv[2];
+
+    //Read file
+    inputFileName = argv[1];
     readInputFile(inputFileName, matrix, n);
+
+    //Capture the Algorithm Options
+    if(string(argv[2]) == "L") algorithmOption = 1;
+    if(string(argv[2]) == "P") algorithmOption = 2;
+    if(string(argv[2]) == "A") algorithmOption = 3;
 
     // Extra options
     for(int i=3; i<argc; i++)
@@ -184,7 +190,7 @@ int main(int argc, char *argv[])
 
     // Processing
     Environment* env = new Environment(matrix, n);
-    string solution = env->solveEnvironment(1);
+    string solution = env->solveEnvironment(algorithmOption);
 
     // Print the solution
     if(graphic) graphicSolution(solution, matrix, n, color);
