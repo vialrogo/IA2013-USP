@@ -13,6 +13,7 @@
 #define ENVIRONMENT_H
 
 #include <string>
+#include "agent.h"
 
 using namespace std;
 
@@ -21,10 +22,13 @@ class Environment
 private:
     char** map;
     int size;
+    Agent* agent;
+
 public:
     Environment(char** mapIn, int sizeIn);
     ~Environment();
     string solveEnvironment(int typeOfAlgorithm);
+    int evalSolution(string solution);
 };
 
 #endif // ENVIRONMENT_H

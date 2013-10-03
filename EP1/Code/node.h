@@ -13,18 +13,22 @@
 #define NODE_H
 
 #include <string>
+#include <sstream>
 
 using namespace std;
 
 class Node
 {
 private:
-	bool* nuggetCatched;
-	int nuggetsTotal, agentOnX, agentOnY;
 
 public:
-    Node(bool* nuggetCatchedIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn); 
+	bool* nuggetCaught;
+	int nuggetsTotal, agentOnX, agentOnY;
+    string path;
+
+    Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn, string pathIn); 
 	~Node();
+    string state2String();
 };
 
 #endif // NODE_H

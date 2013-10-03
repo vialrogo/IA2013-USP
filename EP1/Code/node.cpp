@@ -12,21 +12,36 @@
 #include "node.h"
 
 // constructor
-Node::Node(bool* nuggetCatchedIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn)
+Node::Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn, string pathIn)
 {
 	nuggetsTotal  = nuggetsTotalIn;
 	agentOnX = agentOnXIn;
 	agentOnY = agentOnYIn;
+    path = pathIn;
 
     //create the own vector for delete it in destructor
-	nuggetCatched = new bool[nuggetsTotal];
+	nuggetCaught = new bool[nuggetsTotal];
     for(int i=0; i<nuggetsTotal; i++)
-        nuggetCatched[i] = nuggetCatchedIn[i];
+        nuggetCaught[i] = nuggetCaughtIn[i];
 }
 
 // destructor
 Node::~Node()
 {
-    delete nuggetCatched;
-    nuggetCatched=0;
+    delete nuggetCaught;
+    nuggetCaught=0;
+}
+
+string Node::state2String()
+{
+    ostringstream output;
+
+    output << agentOnX << "_";
+    output << agentOnY << "_";
+
+    for(int i=0; i<nuggetsTotal; i++)
+        if(nuggetCaught[i]) output << "1";
+        else                output << "0";
+
+    return output.str();
 }

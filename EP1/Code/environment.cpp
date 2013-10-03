@@ -10,11 +10,14 @@
 */
 
 #include "environment.h"
+#include <iostream>
+using namespace std;
 
 Environment::Environment(char** mapIn, int sizeIn)
 {
     map = mapIn;
     size = sizeIn;
+    agent = new Agent(mapIn, sizeIn);
 }
 
 Environment::~Environment()
@@ -23,6 +26,25 @@ Environment::~Environment()
 
 string Environment::solveEnvironment(int typeOfAlgorithm)
 {
-    return string("DDDBBEEEBPDBDDDDCCCCDDPEEBBBDDBBBBPCCCEEEEBBDDPEECCEECCDDCCEEE");
+    string solution;
+    
+    //for(int)
+    solution = agent->widthSearch(4);
+    
+    return solution; 
 }
 
+int Environment::evalSolution(string solution)
+{
+    int steps=0;
+    int nuggets=0;
+
+    for(int i=0; i<solution.size(); i++) //Count nuggets and steps
+    {
+        if(solution[i]!='P')
+            steps++;
+        else
+            nuggets++;
+    }
+    return (4*nuggets*size - steps);
+}
