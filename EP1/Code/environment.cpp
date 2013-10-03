@@ -26,11 +26,22 @@ Environment::~Environment()
 
 string Environment::solveEnvironment(int typeOfAlgorithm)
 {
-    string solution;
-    
-    //for(int)
-    solution = agent->widthSearch(4);
-    
+    int points = 0;
+    string solution = "";
+    string newSolution = "";
+
+    for(int i=0; i< size/2; i++)
+    {
+        if(typeOfAlgorithm == 1) newSolution = agent->widthSearch(i+1);
+        if(typeOfAlgorithm == 2) newSolution = agent->iterativeDepthSearch(i+1);
+        if(typeOfAlgorithm == 3) newSolution = agent->aStarSearch(i+1);
+        
+        if(evalSolution(newSolution)>points)
+        {
+            solution = newSolution;
+            points = evalSolution(newSolution);
+        }
+    }
     return solution; 
 }
 

@@ -100,11 +100,6 @@ void Agent::expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue)
         if(matrix[agentOnX-1][agentOnY]!='1')
             nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX-1,agentOnY,path+"C"));
     
-    //Try down (B)
-    if(nodeInitial->agentOnX < (matrixSize-1))
-        if(matrix[agentOnX+1][agentOnY]!='1')
-            nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
-    
     //Try left (E)
     if(nodeInitial->agentOnY > 0)
         if(matrix[agentOnX][agentOnY-1]!='1')
@@ -114,6 +109,11 @@ void Agent::expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue)
     if(nodeInitial->agentOnY < (matrixSize-1))
         if(matrix[agentOnX][agentOnY+1]!='1')
             nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX,agentOnY+1,path+"D"));
+    
+    //Try down (B)
+    if(nodeInitial->agentOnX < (matrixSize-1))
+        if(matrix[agentOnX+1][agentOnY]!='1')
+            nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
 }
 
 string Agent::widthSearch (int nuggetCount)
@@ -123,8 +123,9 @@ string Agent::widthSearch (int nuggetCount)
 	Node* firstNode = new Node(nuggetCaughtInitial, nuggetTotal, 0, 0, "");
 	nodeQueue->push(firstNode); // Put the initial node
     Node* nodeCatcher;
+    totalSet->clear();
 
-    int count=0;
+    //int count=0;
 
 	while(!nodeQueue->empty()) // ############### I can stop early??
     {
@@ -134,19 +135,19 @@ string Agent::widthSearch (int nuggetCount)
         if(totalSet->count(nodeCatcher->state2String())==0)
         {
             if(isNodeASolution(nodeCatcher, nuggetCount)) //If it is a solution
-            {
-                cout<<"Numero de nodos expandido: "<<count<<endl;
+                //{
+                //cout<<"Numero de nodos expandido: "<<count<<endl;
                 return nodeCatcher->path; 
-            }
+            //}
             else
                 expandChildren(nodeCatcher, nodeQueue); //Expand the children
             
             totalSet->insert(nodeCatcher->state2String());
         }
-        count++;
+        //count++;
         delete nodeCatcher;
     }
-    cout<<"Numero de nodos expandido: "<<count<<endl;
+    //cout<<"Numero de nodos expandido: "<<count<<endl;
     return "";
 
     //Deletes and free memory
