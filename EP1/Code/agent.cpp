@@ -11,11 +11,29 @@
 
 #include "agent.h"
 
-string Agent::widthSearch (char** Matrix, int matrixSize, int nuggetCount) {
+Agent::Agent(char** matrixIn, int matrixSizeIn)
+{
+    matrix = matrixIn;
+    matrixSize = matrixSizeIn;
+    nuggetTotal = matrixSize/2;
+
+    nuggetCachedInitial = new bool[nuggetTotal];
+    for(int i=0; i<nuggetTotal; i++)
+        nuggetCachedInitial[i] = true; //true means that the nugget is there
+}
+
+Agent::~Agent()
+{
+    delete nuggetCachedInitial;
+    nuggetCachedInitial=0;
+}
+
+string Agent::widthSearch (int nuggetCount)
+{
 	//This function implements the width-search methods.
 
 	queue<Node*>* nodeQueue = new queue<Node*>();
-	Node* firstNode = new Node(Matrix, matrixSize, 0, 0);
+	Node* firstNode = new Node(nuggetCachedInitial, nuggetTotal, 0, 0);
 	nodeQueue->push(firstNode);
 
 	while(!nodeQueue->empty()) {
@@ -29,12 +47,14 @@ string Agent::widthSearch (char** Matrix, int matrixSize, int nuggetCount) {
 
 }
 
-string Agent::iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount) {
+string Agent::iterativeDepthSearch (int nuggetCount)
+{
 	//This function implements...
     return "";
 }
 
-string Agent::aStarSearch (char** Matrix, int matrixSize, int nuggetCount) {
+string Agent::aStarSearch (int nuggetCount)
+{
     //This function implements... 
     return "";
 }

@@ -196,5 +196,10 @@ int main(int argc, char *argv[])
     if(graphic) graphicSolution(solution, matrix, n, color);
     else        printSolution(solution, n);
 
+    //Deletes and free memory
+    for(int i=0; i<n; i++) delete matrix[i];
+    delete matrix;
+    delete env;
+
     return 0;
 }

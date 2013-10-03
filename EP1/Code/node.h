@@ -19,11 +19,11 @@ using namespace std;
 class Node
 {
 private:
-	char** matrix;
-	int matrixSize, agentOnX, agentOnY;
+	bool* nuggetCatched;
+	int nuggetsTotal, agentOnX, agentOnY;
 
 public:
-	Node(char** matrixIn, int matrixSizeIn, int agentOnXIn, int agentOnYIn);
+    Node(bool* nuggetCatchedIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn); 
 	~Node();
 };
 

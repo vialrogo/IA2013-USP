@@ -11,15 +11,22 @@
 
 #include "node.h"
 
-// construct
-Node::Node(char** matrixIn, int matrixSizeIn, int agentOnXIn, int agentOnYIn) {
-	matrix = matrixIn;
-	matrixSize = matrixSizeIn;
+// constructor
+Node::Node(bool* nuggetCatchedIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn)
+{
+	nuggetsTotal  = nuggetsTotalIn;
 	agentOnX = agentOnXIn;
 	agentOnY = agentOnYIn;
+
+    //create the own vector for delete it in destructor
+	nuggetCatched = new bool[nuggetsTotal];
+    for(int i=0; i<nuggetsTotal; i++)
+        nuggetCatched[i] = nuggetCatchedIn[i];
 }
 
-// destruct
-Node::~Node() {
-	
+// destructor
+Node::~Node()
+{
+    delete nuggetCatched;
+    nuggetCatched=0;
 }

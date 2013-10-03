@@ -21,12 +21,17 @@ using namespace std;
 class Agent
 {
 private:
+    char** matrix;
+    int matrixSize;
+    int nuggetTotal;
+    bool* nuggetCachedInitial;
 
 public:
-    string widthSearch (char** Matrix, int matrixSize, int nuggetCount);
-    string iterativeDepthSearch (char** Matrix, int matrixSize, int nuggetCount);
-    string aStarSearch (char** Matrix, int matrixSize, int nuggetCount);
-    bool isNodeASolution (Node node);
+    Agent(char** matrixIn, int matrixSizeIn);
+    ~Agent();
+    string widthSearch (int nuggetCount);
+    string iterativeDepthSearch (int nuggetCount);
+    string aStarSearch (int nuggetCount);
 };
 
 #endif // AGENT_H
