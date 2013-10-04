@@ -6,7 +6,7 @@
 ** 	    Monna Cleide Santos - n. USP 8477852
 ** 	    Victor Alberto Romero - n. USP XXXXXXX
 **
-** 27 de setembro de 2013
+** 4 de outobro de 2013
 */
 
 #ifndef NODE_H

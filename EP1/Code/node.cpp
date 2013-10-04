@@ -6,12 +6,11 @@
 ** 	    Monna Cleide Santos - n. USP 8477852
 ** 	    Victor Alberto Romero - n. USP XXXXXXX
 **
-** 27 de setembro de 2013
+** 4 de outobro de 2013
 */ 
 
 #include "node.h"
 
-// constructor
 Node::Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn, string pathIn)
 {
 	nuggetsTotal  = nuggetsTotalIn;
@@ -30,7 +29,6 @@ Node::Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOn
     }
 }
 
-// destructor
 Node::~Node()
 {
     delete nuggetCaught;
