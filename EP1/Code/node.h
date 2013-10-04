@@ -25,6 +25,7 @@ public:
 	bool* nuggetCaught;
 	int nuggetsTotal, agentOnX, agentOnY;
     string path;
+    int nuggetCaughtCount;
 
     Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn, string pathIn); 
 	~Node();

@@ -21,8 +21,13 @@ Node::Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOn
 
     //create the own vector for delete it in destructor
 	nuggetCaught = new bool[nuggetsTotal];
+    nuggetCaughtCount=0;
     for(int i=0; i<nuggetsTotal; i++)
+    {
         nuggetCaught[i] = nuggetCaughtIn[i];
+        if(nuggetCaught[i])
+            nuggetCaughtCount++;
+    }
 }
 
 // destructor
