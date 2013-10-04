@@ -124,7 +124,7 @@ void graphicSolution(string solution, int points, char** matrix, int n, bool col
 {
     int xAgent=0;
     int yAgent=0;
-    int usteepTime=100000;
+    int usteepTime=50000;
 
     for(int i=0; i<= solution.size(); i++) //print the moviments and initial state
     {

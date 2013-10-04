@@ -14,6 +14,7 @@
 
 #include <string>
 #include <queue>
+#include <stack>
 #include <set>
 #include "node.h"
 
@@ -38,7 +39,7 @@ public:
     Agent(char** matrixIn, int matrixSizeIn);
     ~Agent();
     string widthSearch (int nuggetCount);
-    string iterativeDepthSearch (int nuggetCount);
+    string depthSearch (int nuggetCount);
     string aStarSearch (int nuggetCount);
 };
 

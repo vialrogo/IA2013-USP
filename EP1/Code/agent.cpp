@@ -145,7 +145,7 @@ string Agent::widthSearch (int nuggetCount)
         {
             if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
             {
-                cout<<"Numero de nodos expandido: "<<count<<endl;
+                cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
                 return nodeCatcher->path; 
             }
             else
@@ -156,7 +156,7 @@ string Agent::widthSearch (int nuggetCount)
         count++;
         delete nodeCatcher;
     }
-    cout<<"Numero de nodos expandido: "<<count<<endl;
+    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
     return "";
 
     //Deletes and free memory
@@ -176,9 +176,74 @@ string Agent::widthSearch (int nuggetCount)
     nodeCatcher=0;
 }
 
-//This function implements...
-string Agent::iterativeDepthSearch (int nuggetCount)
+string Agent::depthSearch (int nuggetCount)
 {
+    int limit = 2*matrixSize*matrixSize; //###### who define this?
+
+    //Create the auxiliar variables
+    queue<Node*>* auxiliarQueue = new queue<Node*>();
+    Node* nodeCatcher;
+    totalSet->clear();
+    int pathSize;
+    int nuggetCaughtCount;
+    int maxProfit = nuggetCount*matrixSize*4;
+    int count=0;
+	
+    //Create the principal structure
+    stack<Node*>* nodeStack = new stack<Node*>();
+	Node* firstNode = new Node(nuggetCaughtInitial, nuggetTotal, 0, 0, "");
+	nodeStack->push(firstNode); // Put the initial node
+
+	while(!nodeStack->empty())
+    {
+        // Capture the node
+		nodeCatcher = nodeStack->top();
+		nodeStack->pop();
+        pathSize = nodeCatcher->path.size(); 
+        nuggetCaughtCount = nodeCatcher->nuggetCaughtCount;
+
+        // If it is a usefull node
+        if(totalSet->count(nodeCatcher->state2String())==0 && (pathSize-nuggetCaughtCount)<maxProfit && pathSize<limit)
+        {
+            if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
+            {
+                cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
+                return nodeCatcher->path; 
+            }
+            else
+            {
+                expandChildren(nodeCatcher, auxiliarQueue); // Expand the children
+                while(auxiliarQueue->size())
+                {
+                    nodeStack->push(auxiliarQueue->front());
+                    auxiliarQueue->pop();
+                }
+            }
+            totalSet->insert(nodeCatcher->state2String()); // Remember this node
+        }
+        count++;
+        delete nodeCatcher;
+    }
+    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
+    return "";
+
+    //Deletes and free memory
+    Node* temp;
+    while(nodeStack->size())
+    {
+        temp = nodeStack->top();
+        nodeStack->pop();
+        delete temp;
+    }
+    delete nodeStack;
+    delete auxiliarQueue;
+
+    //Zering pointers
+    auxiliarQueue=0;
+    nodeStack=0;
+    temp=0;
+    firstNode=0;
+    nodeCatcher=0;
     return "";
 }
 
