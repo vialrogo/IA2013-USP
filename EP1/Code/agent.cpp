@@ -6,7 +6,7 @@
 ** 	    Monna Cleide Santos   - n. USP 8477852
 ** 	    Victor Alberto Romero - n. USP 8405274
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #include "agent.h"
@@ -53,57 +53,6 @@ void Agent::initializeIdNuggetsArray()
     }
 }
 
-int Agent::getIdNuggetByPosition(int xPosition, int yPosition)
-{
-    //Search the idX and idY and return the nugget index or -1 if dont exist
-    for(int i=0; i<nuggetTotal; i++)
-        if(idXNuggets[i]==xPosition && idYNuggets[i]==yPosition)
-            return i;
-    
-    return -1;
-}
-
-void Agent::expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue)
-{
-    int agentOnX = nodeInitial->agentOnX;
-    int agentOnY = nodeInitial->agentOnY;
-    int nuggetsTotal = nodeInitial->nuggetsTotal;
-    string path = nodeInitial->path;
-    
-    //Try nugget (P)
-    if(matrix[nodeInitial->agentOnX][nodeInitial->agentOnY] == '*') //if there has a nugget
-    {
-        int idNugget = getIdNuggetByPosition(nodeInitial->agentOnX, nodeInitial->agentOnY);
-        if(nodeInitial->nuggetCaught[idNugget]==false) //if the nugget is still there
-        {
-            Node* nodeTemp = new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX,agentOnY,path+"P");
-            nodeTemp->nuggetCaught[idNugget]=true;
-            nodeTemp->nuggetCaughtCount++;
-            nodeQueue->push(nodeTemp);
-        }
-    }
-    
-    //Try up (C)
-    if(nodeInitial->agentOnX > 0)
-        if(matrix[agentOnX-1][agentOnY]!='1')
-            nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX-1,agentOnY,path+"C"));
-    
-    //Try left (E)
-    if(nodeInitial->agentOnY > 0)
-        if(matrix[agentOnX][agentOnY-1]!='1')
-            nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX,agentOnY-1,path+"E"));
-    
-    //Try right (D)
-    if(nodeInitial->agentOnY < (matrixSize-1))
-        if(matrix[agentOnX][agentOnY+1]!='1')
-            nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX,agentOnY+1,path+"D"));
-    
-    //Try down (B)
-    if(nodeInitial->agentOnX < (matrixSize-1))
-        if(matrix[agentOnX+1][agentOnY]!='1')
-            nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
-}
-
 string Agent::widthSearch (int nuggetCount)
 {
     //Create the auxiliar variables
@@ -138,7 +87,7 @@ string Agent::widthSearch (int nuggetCount)
                 solution = nodeCatcher->path; 
             }
             else
-                expandChildren(nodeCatcher, nodeQueue); // Expand the children
+                nodeCatcher->expandChildren(nodeQueue, matrix, matrixSize, idXNuggets, idYNuggets); // Expand the children
             
             totalSet->insert(nodeCatcher->state2String()); // Remember this node
         }
@@ -206,7 +155,7 @@ string Agent::depthSearch (int nuggetCount)
             }
             else
             {
-                expandChildren(nodeCatcher, auxiliarQueue); // Expand the children
+                nodeCatcher->expandChildren(auxiliarQueue, matrix, matrixSize, idXNuggets, idYNuggets); // Expand the children
                 while(auxiliarQueue->size())
                 {
                     nodeStack->push(auxiliarQueue->front());
@@ -279,7 +228,7 @@ string Agent::aStarSearch (int nuggetCount)
             }
             else
             {
-                expandChildren(nodeCatcher, auxiliarQueue); // Expand the children
+                nodeCatcher->expandChildren(auxiliarQueue, matrix, matrixSize, idXNuggets, idYNuggets); // Expand the children
                 while(auxiliarQueue->size())
                 {
                     auxiliarQueue->front()->calculeHeuristic(nuggetCount, idXNuggets, idYNuggets);

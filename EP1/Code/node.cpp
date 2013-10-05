@@ -6,7 +6,7 @@
 ** 	    Monna Cleide Santos - n. USP 8477852
 ** 	    Victor Alberto Romero - n. USP XXXXXXX
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */ 
 
 #include "node.h"
@@ -52,7 +52,6 @@ string Node::state2String()
 
 bool Node::isSolution(int nuggetCount)
 {
-    //Total of nuggets caught in this node
     int totalNuggetCaught=0;
     for(int i=0; i<nuggetsTotal; i++)
         if(nuggetCaught[i])
@@ -86,4 +85,50 @@ void Node::calculeHeuristic(int nuggetCount, int* idXNuggets, int* idYNuggets)
     }
     else
         heuristicValue = agentOnX + agentOnY;
+}
+
+void Node::expandChildren(queue<Node*>* &nodeQueue, char** matrix, int matrixSize, int* idXNuggets, int* idYNuggets)
+{
+    //Try nugget (P)
+    if(matrix[agentOnX][agentOnY] == '*') //if there has a nugget
+    {
+        int idNugget = getIdNuggetByPosition(agentOnX, agentOnY,idXNuggets,idYNuggets);
+        if(nuggetCaught[idNugget]==false) //if the nugget is still there
+        {
+            Node* nodeTemp = new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY,path+"P");
+            nodeTemp->nuggetCaught[idNugget]=true;
+            nodeTemp->nuggetCaughtCount++;
+            nodeQueue->push(nodeTemp);
+        }
+    }
+    
+    //Try up (C)
+    if(agentOnX > 0)
+        if(matrix[agentOnX-1][agentOnY]!='1')
+            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX-1,agentOnY,path+"C"));
+    
+    //Try left (E)
+    if(agentOnY > 0)
+        if(matrix[agentOnX][agentOnY-1]!='1')
+            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY-1,path+"E"));
+    
+    //Try right (D)
+    if(agentOnY < (matrixSize-1))
+        if(matrix[agentOnX][agentOnY+1]!='1')
+            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY+1,path+"D"));
+    
+    //Try down (B)
+    if(agentOnX < (matrixSize-1))
+        if(matrix[agentOnX+1][agentOnY]!='1')
+            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
+}
+
+int Node::getIdNuggetByPosition(int xPosition, int yPosition, int* idXNuggets, int* idYNuggets)
+{
+    //Search the idX and idY and return the nugget index or -1 if dont exist
+    for(int i=0; i<nuggetsTotal; i++)
+        if(idXNuggets[i]==xPosition && idYNuggets[i]==yPosition)
+            return i;
+    
+    return -1;
 }

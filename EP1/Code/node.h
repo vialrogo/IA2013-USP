@@ -6,7 +6,7 @@
 ** 	    Monna Cleide Santos - n. USP 8477852
 ** 	    Victor Alberto Romero - n. USP XXXXXXX
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #ifndef NODE_H
@@ -48,6 +48,8 @@ public:
     string state2String();
     bool isSolution(int nuggetCount);
     void calculeHeuristic(int nuggetCount, int* idXNuggets, int* idYNuggets);
+    void expandChildren(queue<Node*>* &nodeQueue, char** matrix, int matrixSize, int* idXNuggets, int* idYNuggets);
+    int getIdNuggetByPosition(int xPosition, int yPosition, int* idXNuggets, int* idYNuggets);
 };
 
 #endif // NODE_H

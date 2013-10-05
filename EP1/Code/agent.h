@@ -6,7 +6,7 @@
 **      Monna Cleide Santos   - n. USP 8477852
 **      Victor Alberto Romero - n. USP 8405274
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #ifndef AGENT_H
@@ -44,9 +44,7 @@ private:
     bool* nuggetCaughtInitial;
     int* idXNuggets;
     int* idYNuggets;
-    void expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue);
     void initializeIdNuggetsArray();
-    int getIdNuggetByPosition(int xPosition, int yPosition);
 
 public:
     Agent(char** matrixIn, int matrixSizeIn);

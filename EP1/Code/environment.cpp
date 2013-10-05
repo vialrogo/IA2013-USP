@@ -6,7 +6,7 @@
 ** 		Monna Cleide Santos   - n. USP 8477852
 ** 		Victor Alberto Romero - n. USP 8405274
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #include "environment.h"

@@ -6,7 +6,7 @@
 ** 	Monna Cleide Santos   - n. USP 8477852
 ** 	Victor Alberto Romero - n. USP 8405274
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #include <iostream>
@@ -71,7 +71,7 @@ void readInputFile(char* inputFileName, char** &matrix, int &n)
 
 void printSolution(string solution, int points)
 {
-    cout<<points<<" pontos"<<endl;
+    cout<<endl<<points<<" pontos"<<endl;
 
     for(int i=0; i<solution.size(); i++)
         cout<<solution[i]<<" ";
