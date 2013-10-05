@@ -49,3 +49,41 @@ string Node::state2String()
 
     return output.str();
 }
+
+bool Node::isSolution(int nuggetCount)
+{
+    //Total of nuggets caught in this node
+    int totalNuggetCaught=0;
+    for(int i=0; i<nuggetsTotal; i++)
+        if(nuggetCaught[i])
+            totalNuggetCaught++;
+
+    if(totalNuggetCaught == nuggetCount && agentOnX==0 && agentOnY==0)
+        return true;
+    else
+        return false;
+}
+
+void Node::calculeHeuristic(int nuggetCount, int* idXNuggets, int* idYNuggets)
+{
+    if(nuggetCaughtCount < nuggetCount)
+    {
+        int farther;
+        pqInt* queueInt = new pqInt(IntComparison(true));
+        
+        for(int i=0; i<nuggetsTotal; i++)
+            if(!nuggetCaught[i])
+                queueInt->push( abs(idXNuggets[i]-agentOnX) 
+                              + abs(idYNuggets[i]-agentOnY)
+                              + idXNuggets[i] + idYNuggets[i]);
+
+        for(int i=0; i<(nuggetCount-nuggetCaughtCount); i++)
+        {
+            farther=queueInt->top();
+            queueInt->pop();
+        }
+        heuristicValue = farther;
+    }
+    else
+        heuristicValue = agentOnX + agentOnY;
+}

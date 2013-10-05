@@ -63,20 +63,6 @@ int Agent::getIdNuggetByPosition(int xPosition, int yPosition)
     return -1;
 }
 
-bool Agent::isNodeASolution(Node* node, int nuggetCount)
-{
-    //Total of nuggets caught in this node
-    int totalNuggetCaught=0;
-    for(int i=0; i<nuggetTotal; i++)
-        if(node->nuggetCaught[i])
-            totalNuggetCaught++;
-
-    if(totalNuggetCaught == nuggetCount && node->agentOnX==0 && node->agentOnY==0)
-        return true;
-    else
-        return false;
-}
-
 void Agent::expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue)
 {
     int agentOnX = nodeInitial->agentOnX;
@@ -118,43 +104,6 @@ void Agent::expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue)
             nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
 }
 
-void Agent::calculeHeuristic(Node* &node, int nuggetCount)
-{
-    if(node->nuggetCaughtCount < nuggetCount)
-    {
-        //int closerNugget=matrixSize*2;
-        //int distToNugget=0;
-
-        //for(int i=0; i<nuggetTotal; i++)
-        //{
-            //if(!node->nuggetCaught[i])
-            //{
-                //distToNugget = abs(idXNuggets[i]-node->agentOnX) + abs(idYNuggets[i]-node->agentOnY);
-                //if(distToNugget<closerNugget)
-                    //closerNugget=distToNugget;
-            //}
-        //}
-        //node->heuristicValue = closerNugget;
-        
-        int farther;
-        pqInt* queueInt = new pqInt(IntComparison(true));
-        
-        for(int i=0; i<nuggetTotal; i++)
-            if(!node->nuggetCaught[i])
-                queueInt->push( abs(idXNuggets[i]-node->agentOnX) + abs(idYNuggets[i]-node->agentOnY)
-                                + idXNuggets[i] + idYNuggets[i]);
-
-        for(int i=0; i<(nuggetCount-node->nuggetCaughtCount); i++)
-        {
-            farther=queueInt->top();
-            queueInt->pop();
-        }
-        node->heuristicValue = farther;
-    }
-    else
-        node->heuristicValue = node->agentOnX + node->agentOnY;
-}
-
 string Agent::widthSearch (int nuggetCount)
 {
     //Create the auxiliar variables
@@ -183,7 +132,7 @@ string Agent::widthSearch (int nuggetCount)
         // If it is a usefull node
         if(totalSet->count(nodeCatcher->state2String())==0 && (pathSize-nuggetCaughtCount)<maxProfit)
         {
-            if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
+            if(nodeCatcher->isSolution(nuggetCount)) // If it is a solution
             {
                 hasSolution=true;
                 solution = nodeCatcher->path; 
@@ -250,7 +199,7 @@ string Agent::depthSearch (int nuggetCount)
         // If it is a usefull node
         if(totalSet->count(nodeCatcher->state2String())==0 && (pathSize-nuggetCaughtCount)<maxProfit && pathSize<limit)
         {
-            if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
+            if(nodeCatcher->isSolution(nuggetCount)) // If it is a solution
             {
                 hasSolution=true;
                 solution = nodeCatcher->path; 
@@ -323,7 +272,7 @@ string Agent::aStarSearch (int nuggetCount)
         // If it is a usefull node
         if(totalSet->count(nodeCatcher->state2String())==0 && (pathSize-nuggetCaughtCount)<maxProfit)
         {
-            if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
+            if(nodeCatcher->isSolution(nuggetCount)) // If it is a solution
             {
                 hasSolution=true;
                 solution = nodeCatcher->path; 
@@ -333,7 +282,7 @@ string Agent::aStarSearch (int nuggetCount)
                 expandChildren(nodeCatcher, auxiliarQueue); // Expand the children
                 while(auxiliarQueue->size())
                 {
-                    calculeHeuristic(auxiliarQueue->front(),nuggetCount);
+                    auxiliarQueue->front()->calculeHeuristic(nuggetCount, idXNuggets, idYNuggets);
                     nodeQueue->push(auxiliarQueue->front());
                     auxiliarQueue->pop();
                 }

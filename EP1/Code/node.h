@@ -12,14 +12,29 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <stdlib.h>
 #include <string>
 #include <sstream>
+#include <queue>
 
 using namespace std;
 
-class Node
+class IntComparison
 {
 private:
+  bool reverse;
+public:
+    IntComparison(const bool& revparam=false){ reverse=revparam; }
+    bool operator() (const int& lhs, const int&rhs) const
+    {
+        if (reverse) return (lhs>rhs);
+        else return (lhs<rhs);
+    }
+};
+
+class Node
+{
+    typedef priority_queue <int,  vector<int>,   IntComparison> pqInt;
 
 public:
 	bool* nuggetCaught;
@@ -31,6 +46,8 @@ public:
     Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOnYIn, string pathIn); 
 	~Node();
     string state2String();
+    bool isSolution(int nuggetCount);
+    void calculeHeuristic(int nuggetCount, int* idXNuggets, int* idYNuggets);
 };
 
 #endif // NODE_H
