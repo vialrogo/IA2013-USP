@@ -17,6 +17,7 @@ Node::Node(bool* nuggetCaughtIn, int nuggetsTotalIn, int agentOnXIn, int agentOn
 	agentOnX = agentOnXIn;
 	agentOnY = agentOnYIn;
     path = pathIn;
+    heuristicValue=0;
 
     //create the own vector for delete it in destructor
 	nuggetCaught = new bool[nuggetsTotal];

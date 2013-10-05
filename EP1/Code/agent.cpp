@@ -11,7 +11,7 @@
 
 #include "agent.h"
 
-#include <iostream>
+#include <iostream> //###################################### temporal!!
 using namespace std;
 
 Agent::Agent(char** matrixIn, int matrixSizeIn)
@@ -118,6 +118,30 @@ void Agent::expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue)
             nodeQueue->push(new Node(nodeInitial->nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
 }
 
+void Agent::calculeHeuristic(Node* &node, int nuggetCount)
+{
+    if(node->nuggetCaughtCount < nuggetCount)
+    {
+        int closerNugget=matrixSize*2;
+        int distToNugget=0;
+
+        for(int i=0; i<nuggetTotal; i++)
+        {
+            if(!node->nuggetCaught[i])
+            {
+                distToNugget = abs(idXNuggets[i]-node->agentOnX) + abs(idYNuggets[i]-node->agentOnY);
+                if(distToNugget<closerNugget)
+                    closerNugget=distToNugget;
+            }
+        }
+        node->heuristicValue = closerNugget;
+        //pqInt* queueInt = new pqInt(IntComparison(true));        
+
+    }
+    else
+        node->heuristicValue = node->agentOnX + node->agentOnY;
+}
+
 string Agent::widthSearch (int nuggetCount)
 {
     //Create the auxiliar variables
@@ -127,13 +151,15 @@ string Agent::widthSearch (int nuggetCount)
     int nuggetCaughtCount;
     int maxProfit = nuggetCount*matrixSize*4;
     int count=0;
+    string solution="";
+    bool hasSolution=false;
 	
     //Create the principal structure
     queue<Node*>* nodeQueue = new queue<Node*>();
 	Node* firstNode = new Node(nuggetCaughtInitial, nuggetTotal, 0, 0, "");
 	nodeQueue->push(firstNode); // Put the initial node
 
-	while(!nodeQueue->empty())
+	while(!nodeQueue->empty() && !hasSolution)
     {
         // Capture the node
 		nodeCatcher = nodeQueue->front();
@@ -146,8 +172,8 @@ string Agent::widthSearch (int nuggetCount)
         {
             if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
             {
-                cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
-                return nodeCatcher->path; 
+                hasSolution=true;
+                solution = nodeCatcher->path; 
             }
             else
                 expandChildren(nodeCatcher, nodeQueue); // Expand the children
@@ -157,8 +183,6 @@ string Agent::widthSearch (int nuggetCount)
         count++;
         delete nodeCatcher;
     }
-    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
-    return "";
 
     //Deletes and free memory
     Node* temp;
@@ -175,6 +199,11 @@ string Agent::widthSearch (int nuggetCount)
     temp=0;
     firstNode=0;
     nodeCatcher=0;
+
+    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
+    
+    if(hasSolution) return solution;
+    else            return "";
 }
 
 string Agent::depthSearch (int nuggetCount)
@@ -189,13 +218,15 @@ string Agent::depthSearch (int nuggetCount)
     int nuggetCaughtCount;
     int maxProfit = nuggetCount*matrixSize*4;
     int count=0;
+    string solution="";
+    bool hasSolution=false;
 	
     //Create the principal structure
     stack<Node*>* nodeStack = new stack<Node*>();
 	Node* firstNode = new Node(nuggetCaughtInitial, nuggetTotal, 0, 0, "");
 	nodeStack->push(firstNode); // Put the initial node
 
-	while(!nodeStack->empty())
+	while(!nodeStack->empty() && !hasSolution)
     {
         // Capture the node
 		nodeCatcher = nodeStack->top();
@@ -208,8 +239,8 @@ string Agent::depthSearch (int nuggetCount)
         {
             if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
             {
-                cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
-                return nodeCatcher->path; 
+                hasSolution=true;
+                solution = nodeCatcher->path; 
             }
             else
             {
@@ -225,8 +256,6 @@ string Agent::depthSearch (int nuggetCount)
         count++;
         delete nodeCatcher;
     }
-    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
-    return "";
 
     //Deletes and free memory
     Node* temp;
@@ -245,11 +274,83 @@ string Agent::depthSearch (int nuggetCount)
     temp=0;
     firstNode=0;
     nodeCatcher=0;
-    return "";
+    
+    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
+    
+    if(hasSolution) return solution;
+    else            return "";
 }
 
-//This function implements... 
 string Agent::aStarSearch (int nuggetCount)
 {
-    return "";
+    //Create the auxiliar variables
+    queue<Node*>* auxiliarQueue = new queue<Node*>();
+    Node* nodeCatcher;
+    totalSet->clear();
+    int pathSize;
+    int nuggetCaughtCount;
+    int maxProfit = nuggetCount*matrixSize*4;
+    int count=0;
+    string solution="";
+    bool hasSolution=false;
+	
+    //Create the principal structure
+    pqNode* nodeQueue = new pqNode();
+	Node* firstNode = new Node(nuggetCaughtInitial, nuggetTotal, 0, 0, "");
+	nodeQueue->push(firstNode); // Put the initial node
+
+	while(!nodeQueue->empty() && !hasSolution)
+    {
+        // Capture the node
+		nodeCatcher = nodeQueue->top();
+		nodeQueue->pop();
+        pathSize = nodeCatcher->path.size(); 
+        nuggetCaughtCount = nodeCatcher->nuggetCaughtCount;
+
+        // If it is a usefull node
+        if(totalSet->count(nodeCatcher->state2String())==0 && (pathSize-nuggetCaughtCount)<maxProfit)
+        {
+            if(isNodeASolution(nodeCatcher, nuggetCount)) // If it is a solution
+            {
+                hasSolution=true;
+                solution = nodeCatcher->path; 
+            }
+            else
+            {
+                expandChildren(nodeCatcher, auxiliarQueue); // Expand the children
+                while(auxiliarQueue->size())
+                {
+                    calculeHeuristic(auxiliarQueue->front(),nuggetCount);
+                    nodeQueue->push(auxiliarQueue->front());
+                    auxiliarQueue->pop();
+                }
+            }
+            totalSet->insert(nodeCatcher->state2String()); // Remember this node
+        }
+        count++;
+        delete nodeCatcher;
+    }
+
+    //Deletes and free memory
+    Node* temp;
+    while(nodeQueue->size())
+    {
+        temp = nodeQueue->top();
+        nodeQueue->pop();
+        delete temp;
+    }
+    delete nodeQueue;
+    delete auxiliarQueue;
+
+    //Zering pointers
+    auxiliarQueue=0;
+    nodeQueue=0;
+    temp=0;
+    firstNode=0;
+    nodeCatcher=0;
+    
+    cout<<"Expanded nodes for "<<nuggetCount<<" nuggets objective: "<<count<<endl;
+    
+    if(hasSolution) return solution;
+    else            return "";
 }
