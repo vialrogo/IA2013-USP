@@ -122,21 +122,34 @@ void Agent::calculeHeuristic(Node* &node, int nuggetCount)
 {
     if(node->nuggetCaughtCount < nuggetCount)
     {
-        int closerNugget=matrixSize*2;
-        int distToNugget=0;
+        //int closerNugget=matrixSize*2;
+        //int distToNugget=0;
 
+        //for(int i=0; i<nuggetTotal; i++)
+        //{
+            //if(!node->nuggetCaught[i])
+            //{
+                //distToNugget = abs(idXNuggets[i]-node->agentOnX) + abs(idYNuggets[i]-node->agentOnY);
+                //if(distToNugget<closerNugget)
+                    //closerNugget=distToNugget;
+            //}
+        //}
+        //node->heuristicValue = closerNugget;
+        
+        int farther;
+        pqInt* queueInt = new pqInt(IntComparison(true));
+        
         for(int i=0; i<nuggetTotal; i++)
-        {
             if(!node->nuggetCaught[i])
-            {
-                distToNugget = abs(idXNuggets[i]-node->agentOnX) + abs(idYNuggets[i]-node->agentOnY);
-                if(distToNugget<closerNugget)
-                    closerNugget=distToNugget;
-            }
-        }
-        node->heuristicValue = closerNugget;
-        //pqInt* queueInt = new pqInt(IntComparison(true));        
+                queueInt->push( abs(idXNuggets[i]-node->agentOnX) + abs(idYNuggets[i]-node->agentOnY)
+                                + idXNuggets[i] + idYNuggets[i]);
 
+        for(int i=0; i<(nuggetCount-node->nuggetCaughtCount); i++)
+        {
+            farther=queueInt->top();
+            queueInt->pop();
+        }
+        node->heuristicValue = farther;
     }
     else
         node->heuristicValue = node->agentOnX + node->agentOnY;
