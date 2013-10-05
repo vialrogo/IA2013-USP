@@ -6,7 +6,7 @@
 ** 	Monna Cleide Santos   - n. USP 8477852
 ** 	Victor Alberto Romero - n. USP 8405274
 **
-** 27 de setembro de 2013
+** 4 de outobro de 2013
 */
 
 #include <iostream>
@@ -69,21 +69,10 @@ void readInputFile(char* inputFileName, char** &matrix, int &n)
     fileIn=0;
 }
 
-void printSolution(string solution, int n)
+void printSolution(string solution, int points)
 {
-    int steps=0;
-    int nuggets=0;
+    cout<<points<<" pontos"<<endl;
 
-    for(int i=0; i<solution.size(); i++) //Count nuggets and steps
-    {
-        if(solution[i]!='P')
-            steps++;
-        else
-            nuggets++;
-    }
-
-    cout<<(4*nuggets*n - steps)<<" pontos"<<endl;
-    
     for(int i=0; i<solution.size(); i++)
         cout<<solution[i]<<" ";
 
@@ -131,11 +120,11 @@ void printMatrixWithAgent(char** matrix, int n, int xAgent, int yAgent, bool col
     }
 }
 
-void graphicSolution(string solution, char** matrix, int n, bool color)
+void graphicSolution(string solution, int points, char** matrix, int n, bool color)
 {
     int xAgent=0;
     int yAgent=0;
-    int usteepTime=100000;
+    int usteepTime=50000;
 
     for(int i=0; i<= solution.size(); i++) //print the moviments and initial state
     {
@@ -153,7 +142,7 @@ void graphicSolution(string solution, char** matrix, int n, bool color)
         }
     }
     cout<<endl;
-    printSolution(solution,n);
+    printSolution(solution,points);
 }
 
 int main(int argc, char *argv[])
@@ -191,10 +180,16 @@ int main(int argc, char *argv[])
     // Processing
     Environment* env = new Environment(matrix, n);
     string solution = env->solveEnvironment(algorithmOption);
+    int points = env->evalSolution(solution);
 
     // Print the solution
-    if(graphic) graphicSolution(solution, matrix, n, color);
-    else        printSolution(solution, n);
+    if(graphic) graphicSolution(solution, points, matrix, n, color);
+    else        printSolution(solution, points);
+
+    //Deletes and free memory
+    for(int i=0; i<n; i++) delete matrix[i];
+    delete matrix;
+    delete env;
 
     return 0;
 }
