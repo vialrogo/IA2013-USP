@@ -89,6 +89,8 @@ void Node::calculeHeuristic(int nuggetCount, int* idXNuggets, int* idYNuggets)
 
 void Node::expandChildren(queue<Node*>* &nodeQueue, char** matrix, int matrixSize, int* idXNuggets, int* idYNuggets)
 {
+    bool expandOnMove = true;
+
     //Try nugget (P)
     if(matrix[agentOnX][agentOnY] == '*') //if there has a nugget
     {
@@ -99,28 +101,32 @@ void Node::expandChildren(queue<Node*>* &nodeQueue, char** matrix, int matrixSiz
             nodeTemp->nuggetCaught[idNugget]=true;
             nodeTemp->nuggetCaughtCount++;
             nodeQueue->push(nodeTemp);
+            expandOnMove = false;
         }
     }
-    
-    //Try up (C)
-    if(agentOnX > 0)
-        if(matrix[agentOnX-1][agentOnY]!='1')
-            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX-1,agentOnY,path+"C"));
-    
-    //Try left (E)
-    if(agentOnY > 0)
-        if(matrix[agentOnX][agentOnY-1]!='1')
-            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY-1,path+"E"));
-    
-    //Try right (D)
-    if(agentOnY < (matrixSize-1))
-        if(matrix[agentOnX][agentOnY+1]!='1')
-            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY+1,path+"D"));
-    
-    //Try down (B)
-    if(agentOnX < (matrixSize-1))
-        if(matrix[agentOnX+1][agentOnY]!='1')
-            nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
+
+    if(expandOnMove)
+    {    
+        //Try up (C)
+        if(agentOnX > 0)
+            if(matrix[agentOnX-1][agentOnY]!='1')
+                nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX-1,agentOnY,path+"C"));
+        
+        //Try left (E)
+        if(agentOnY > 0)
+            if(matrix[agentOnX][agentOnY-1]!='1')
+                nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY-1,path+"E"));
+        
+        //Try right (D)
+        if(agentOnY < (matrixSize-1))
+            if(matrix[agentOnX][agentOnY+1]!='1')
+                nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX,agentOnY+1,path+"D"));
+        
+        //Try down (B)
+        if(agentOnX < (matrixSize-1))
+            if(matrix[agentOnX+1][agentOnY]!='1')
+                nodeQueue->push(new Node(nuggetCaught,nuggetsTotal,agentOnX+1,agentOnY,path+"B"));
+    }
 }
 
 int Node::getIdNuggetByPosition(int xPosition, int yPosition, int* idXNuggets, int* idYNuggets)
