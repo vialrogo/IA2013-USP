@@ -73,7 +73,7 @@ void printSolution(string solution, int points)
 {
     cout<<endl<<points<<" pontos"<<endl;
 
-    for(int i=0; i<solution.size(); i++)
+    for(int i=0; i<(int)solution.size(); i++)
         cout<<solution[i]<<" ";
 
     cout<<endl;
@@ -126,13 +126,13 @@ void graphicSolution(string solution, int points, char** matrix, int n, bool col
     int yAgent=0;
     int usteepTime=50000;
 
-    for(int i=0; i<= solution.size(); i++) //print the moviments and initial state
+    for(int i=0; i<=(int)solution.size(); i++) //print the moviments and initial state
     {
         system("clear");
         printMatrixWithAgent(matrix, n, xAgent, yAgent, color);
         usleep(usteepTime);
        
-        if(i<solution.size())//if has more moviments
+        if(i<(int)solution.size())//if has more moviments
         {
             if(solution[i]=='D') yAgent++;
             if(solution[i]=='E') yAgent--;
