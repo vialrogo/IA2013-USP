@@ -48,7 +48,7 @@ int Environment::evalSolution(string solution)
     int steps=0;
     int nuggets=0;
 
-    for(int i=0; i<solution.size(); i++) //Count nuggets and steps
+    for(int i=0; i<(int)solution.size(); i++) //Count nuggets and steps
     {
         if(solution[i]!='P')
             steps++;
