@@ -6,13 +6,12 @@
 **      Monna Cleide Santos   - n. USP 8477852
 **      Victor Alberto Romero - n. USP 8405274
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #ifndef AGENT_H
 #define AGENT_H
 
-#include <stdlib.h>
 #include <string>
 #include <queue>
 #include <stack>
@@ -33,22 +32,8 @@ public:
     }
 };
 
-class IntComparison
-{
-private:
-  bool reverse;
-public:
-    IntComparison(const bool& revparam=false){ reverse=revparam; }
-    bool operator() (const int& lhs, const int&rhs) const
-    {
-        if (reverse) return (lhs>rhs);
-        else return (lhs<rhs);
-    }
-};
-
 class Agent
 {
-    typedef priority_queue <int,  vector<int>,   IntComparison> pqInt;
     typedef priority_queue <Node*,vector<Node*>,NodeComparison> pqNode;
 
 private:
@@ -59,11 +44,7 @@ private:
     bool* nuggetCaughtInitial;
     int* idXNuggets;
     int* idYNuggets;
-    bool isNodeASolution(Node* node, int nuggetCount);
-    void expandChildren(Node* nodeInitial, queue<Node*>* &nodeQueue);
     void initializeIdNuggetsArray();
-    int getIdNuggetByPosition(int xPosition, int yPosition);
-    void calculeHeuristic(Node* &node, int nuggetCount);
 
 public:
     Agent(char** matrixIn, int matrixSizeIn);

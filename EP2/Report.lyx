@@ -1,0 +1,167 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,decorations.pathreplacing,decorations.pathmorphing,shapes,matrix,shapes.symbols,plotmarks,decorations.markings,shadows}
+\end_preamble
+\use_default_options false
+\begin_modules
+enumitem
+customHeadersFooters
+endnotes
+fixltx2e
+fix-cm
+\end_modules
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\float_placement tbh
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_title "Your Title"
+\pdf_author "Your Name"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "basicstyle={\footnotesize\ttfamily},breaklines=true,extendedchars=true,framexbottommargin=4pt,framexleftmargin=17pt,framexrightmargin=5pt,keywordstyle={\color{red}},showspaces=false,showstringspaces=false,showtabs=false,stepnumber=2,stringstyle={\color{white}\ttfamily},tabsize=2,xleftmargin=17pt"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\series bold
+\size huge
+Inteligência Artificial
+\series default
+\size default
+ 
+\size larger
+
+\begin_inset Newline newline
+\end_inset
+
+Exercicio Programa 2
+\end_layout
+
+\begin_layout Author
+Victor Alberto Romero, NUSP: 8405274
+\begin_inset Newline newline
+\end_inset
+
+Monna Cleide Santos Rodrigues, NUSP: XXXXXXX
+\end_layout
+
+\begin_layout Enumerate
+Considere o seguinte programa:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+f(1, um).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+f(s(1), dois).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+f(s(s(1))), três).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+f(s(s(s(X))), N) :- f(X, N).
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dê a resposta às seguintes consultas (caso haja várias, dê pelo menos duas):
+ 
+\end_layout
+
+\begin_layout Enumerate
+asdfasdfasdf
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

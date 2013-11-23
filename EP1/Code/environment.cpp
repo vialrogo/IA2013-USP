@@ -6,7 +6,7 @@
 ** 		Monna Cleide Santos   - n. USP 8477852
 ** 		Victor Alberto Romero - n. USP 8405274
 **
-** 4 de outobro de 2013
+** 4 de outubro de 2013
 */
 
 #include "environment.h"
@@ -48,7 +48,7 @@ int Environment::evalSolution(string solution)
     int steps=0;
     int nuggets=0;
 
-    for(int i=0; i<solution.size(); i++) //Count nuggets and steps
+    for(int i=0; i<(int)solution.size(); i++) //Count nuggets and steps
     {
         if(solution[i]!='P')
             steps++;
