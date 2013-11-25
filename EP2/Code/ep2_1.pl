@@ -106,11 +106,14 @@ monta_lista(L) :- readln(X), downCaseList(X,L).
 %%%%%%%%%%%%%%%%%%%%%%%%% Terceira parte %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Perguntas
-pergunta(quem).
-pergunta(quando).
+%Reverte uma lista de dias para o formtao original
+revertDias([],'').
+revertDias([H | []],S) :-   convertDia(D,H), string_concat(D,'',S), !.
+revertDias([H|T],S)    :-   convertDia(D,H), revertDias(T,R),
+                            string_concat(D,' e ',W), string_concat(W,R,S).
 
-oque([o, que]).
+%Função auxiliar para calcular bem os dias
+ehComDias(Di,Ho,Hp) :- eh(Di,Ho), revertDias(Ho,Hp).
 
 %Monta uma lista com um elemento repetido, a quantidade de elementos de outra
 %lista. Serve para writes repetidos
@@ -119,9 +122,8 @@ montarListaS(S,[_|T],X) :- montarListaS(S,T,Y), append([S],Y,X).
 
 % Consulta: "Quem da macxxx?"
 % Resposta: "O professor yyy da macxxx."
-responder([quem, da | X]) :- disciplina(X)) -> Di is X; (oque(X) -> true; false)), 
-                             findall([Pr,Di], da(Pr,Di), L),
-                             montarListaS('O professor %w da %w\n',L,S),
+responder([quem, da, Di]) :- findall([Pr,Di], da(Pr,Di), L),
+                             montarListaS('O professor %w da %w.\n',L,S),
                              maplist(writef,S,L).
 
 % Consulta: "Quem da o que?"
@@ -129,14 +131,20 @@ responder([quem, da | X]) :- disciplina(X)) -> Di is X; (oque(X) -> true; false)
 % A professora yy2 da mac xx2.
 % ...."
 responder([quem, da, o, que]) :- findall([Pr,Di], da(Pr,Di), L),
-                                 montarListaS('O professor %w da %w\n',L,S),
+                                 montarListaS('O professor %w da %w.\n',L,S),
                                  maplist(writef,S,L).
 
 % Consulta: "Quando eh macxxx?"
 % Resposta: "Macxxx eh as yyy e zzz."
-responder([quando, eh, o, que]) :- findall([Di,Ho], eh(Di,Ho), L),
-                                 montarListaS('%w eh aas %w\n',L,S),
-                                 maplist(writef,S,L).
+responder([quando, eh, Di]) :-  findall([Di,Hp], ehComDias(Di,_,Hp), L),
+                                montarListaS('%w eh aas %w.\n',L,S),
+                                maplist(writef,S,L).
+
+% Consulta: "Quando eh o que?"
+% Resposta: "Macxxx eh as yyy e zzz."
+responder([quando, eh, o, que]) :-  findall([Di,Hp], ehComDias(Di,_,Hp), L),
+                                    montarListaS('%w eh aas %w.\n',L,S),
+                                    maplist(writef,S,L).
 
 % Consulta: "O que o professor xxx da?"
 % Resposta: "O professor xxx da macyyy."
