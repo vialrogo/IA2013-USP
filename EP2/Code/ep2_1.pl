@@ -61,16 +61,20 @@ convertLD( [H, _ |T], [Hc|Tc]) :- convertDia(H, Hc), convertLD(T, Tc).
 :- dynamic da/2.
 :- dynamic eh/2.
 
+%Mi propia função assertz
+mAssertz(X) :- call(X), !.
+mAssertz(X) :- assertz(X).
+
 %Inserções
 inserir(X,[Ar,Ad,Pr,Vr,Di]) :-  artigo(Ar),adjetivo(Ad),verbo(Vr),
-                                P =.. [Ad,Pr], assertz(P),
-                                assertz(disciplina(Di)),
-                                X =.. [Vr, Pr, Di], assertz(X).
+                                P =.. [Ad,Pr], mAssertz(P),
+                                mAssertz(disciplina(Di)),
+                                X =.. [Vr, Pr, Di], mAssertz(X).
 
 inserir(X,[Di,Vr,Adv|Ld]) :- verbo(Vr),adverbio(Adv),lista_dias(Ld),
-                             assertz(disciplina(Di)),
+                             mAssertz(disciplina(Di)),
                              convertLD(Ld,Ldn),
-                             X =.. [Vr, Di, Ldn], assertz(X).
+                             X =.. [Vr, Di, Ldn], mAssertz(X).
 
 inserir(X,[Ar,Ad,Pr,Vr,Di,Adv|Ld]) :- artigo(Ar),adjetivo(Ad),verbo(Vr),
                                       adverbio(Adv),lista_dias(Ld),
@@ -115,6 +119,10 @@ revertDias([H|T],S)    :-   convertDia(D,H), revertDias(T,R),
 %Função auxiliar para calcular bem os dias
 ehComDias(Di,Ho,Hp) :- eh(Di,Ho), revertDias(Ho,Hp).
 
+%Funções auxiliares para saber que da um professor ou professora
+daProfessor(Pr,Di)  :- professor(Pr), da(Pr,Di).
+daProfessora(Pr,Di) :- professora(Pr), da(Pr,Di).
+
 %Monta uma lista com um elemento repetido, a quantidade de elementos de outra
 %lista. Serve para writes repetidos
 montarListaS(_,[],[]).  
@@ -122,16 +130,24 @@ montarListaS(S,[_|T],X) :- montarListaS(S,T,Y), append([S],Y,X).
 
 % Consulta: "Quem da macxxx?"
 % Resposta: "O professor yyy da macxxx."
-responder([quem, da, Di]) :- findall([Pr,Di], da(Pr,Di), L),
+responder([quem, da, Di]) :- findall([Pr,Di], daProfessor(Pr,Di), L),
                              montarListaS('O professor %w da %w.\n',L,S),
+                             maplist(writef,S,L).
+
+responder([quem, da, Di]) :- findall([Pr,Di], daProfessora(Pr,Di), L),
+                             montarListaS('A professora %w da %w.\n',L,S),
                              maplist(writef,S,L).
 
 % Consulta: "Quem da o que?"
 % Resposta: "O profesor yy1 da macxx1.
 % A professora yy2 da mac xx2.
 % ...."
-responder([quem, da, o, que]) :- findall([Pr,Di], da(Pr,Di), L),
+responder([quem, da, o, que]) :- findall([Pr,Di], daProfessor(Pr,Di), L),
                                  montarListaS('O professor %w da %w.\n',L,S),
+                                 maplist(writef,S,L).
+
+responder([quem, da, o, que]) :- findall([Pr,Di], daProfessora(Pr,Di), L),
+                                 montarListaS('A professora %w da %w.\n',L,S),
                                  maplist(writef,S,L).
 
 % Consulta: "Quando eh macxxx?"
@@ -148,9 +164,15 @@ responder([quando, eh, o, que]) :-  findall([Di,Hp], ehComDias(Di,_,Hp), L),
 
 % Consulta: "O que o professor xxx da?"
 % Resposta: "O professor xxx da macyyy."
+responder([o, que, o, professor, Pr, da]) :- findall([Pr,Di], daProfessor(Pr,Di), L),
+                                             montarListaS('O professor %w da %w.\n',L,S),
+                                             maplist(writef,S,L).
 
 % Consulta: "O que a professora xxx da?"
 % Resposta: "A professora xxx da macyyy."
+responder([o, que, a, professora, Pr, da]) :- findall([Pr,Di], daProfessora(Pr,Di), L),
+                                              montarListaS('A professora %w da %w.\n',L,S),
+                                              maplist(writef,S,L).
 
 %Conlusta ao programa
 consulta :- monta_lista(L), sentenca(_,L,_).
