@@ -14,25 +14,37 @@ adjetivo(professora).
 
 %Verbos conjugados
 verbo(da).
+verbo(eh).
 
 %Ponto
 ponto('.').
 
+%Pergunta
+pergunta(?).
+
 %Banco de conhecimento
-:- dynamic professor/1. %Por enquanto qualquer genero
-
+:- dynamic professor/1.
+:- dynamic professora/1.
 :- dynamic disciplina/1.
-
 :- dynamic da/2.
-
 :- dynamic eh/2.
 
-sentenca(X,[Ar,Ad,Pr,Vr,Di,Po],G) :- artigo(Ar),adjetivo(Ad),
-                                     verbo(Vr),ponto(Po),
-                                     asserta(professor(Pr)),
-                                     asserta(disciplina(Di)),
-                                     asserta(da(Pr,Di)).
-                                     
+%Inserções
+inserir(X,[Ar,Ad,Pr,Vr,Di]) :- artigo(Ar),adjetivo(Ad),verbo(Vr),
+                                  P =.. [Ad,Pr], assertz(P),
+                                  assertz(disciplina(Di)),
+                                  X =.. [Vr, Pr, Di], assertz(X).
+
+%Sentenca
+sentenca(X,Frase,G) :- reverse(Frase,[H|T]),ponto(H),reverse(T,F),inserir(X,F). 
+sentenca(X,Frase,G) :- reverse(Frase,[H|T]),pergunta(H),reverse(T,F),responder(X,F). 
+
+%Apagar tudo
+apagar :-   retractall(professor(_)),
+            retractall(professora(_)),
+            retractall(disciplina(_)),
+            retractall(da(_,_)),
+            retractall(eh(_,_)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% Segunda parte %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
