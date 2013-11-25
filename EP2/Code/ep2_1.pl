@@ -72,11 +72,17 @@ inserir(X,[Di,Vr,Adv|Ld]) :- verbo(Vr),adverbio(Adv),lista_dias(Ld),
                              convertLD(Ld,Ldn),
                              X =.. [Vr, Di, Ldn], assertz(X).
 
+inserir(X,[Ar,Ad,Pr,Vr,Di,Adv|Ld]) :- artigo(Ar),adjetivo(Ad),verbo(Vr),
+                                      adverbio(Adv),lista_dias(Ld),
+                                      inserir(X,[Ar,Ad,Pr,Vr,Di]).
+
+inserir(X,[Ar,Ad,_,Vr,Di,Adv|Ld]) :- artigo(Ar),adjetivo(Ad),verbo(Vr),
+                                     adverbio(Adv),lista_dias(Ld),
+                                     inserir(X,[Di,eh,Adv|Ld]).
+
 %Sentenca
-sentenca(X,Frase,_) :-  reverse(Frase,[H|T]),ponto(H),reverse(T,F),
-                        inserir(X,F), !. 
-sentenca(X,Frase,_) :-  reverse(Frase,[H|T]),pergunta(H),reverse(T,F),
-                        responder(X,F), !. 
+sentenca(X,Frase,_) :-  reverse(Frase,[H|T]),ponto(H),reverse(T,F),inserir(X,F). 
+sentenca(X,Frase,_) :-  reverse(Frase,[H|T]),pergunta(H),reverse(T,F),responder(X,F). 
 
 %Apagar tudo
 apagar :-   retractall(professor(_)),
