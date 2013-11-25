@@ -17,6 +17,10 @@ adjetivo(professora).
 
 %Banco de conhecimento
 :- dynamic professor/1. %Por enquanto qualquer genero
+professor(marcelo).
+
+:- dynamic disciplina/1
+
 
 :- dynamic da/2.
 da(marcelo, mac239).
