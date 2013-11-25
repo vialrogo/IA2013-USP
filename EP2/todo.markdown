@@ -1,3 +1,3 @@
 # TO DO LIST
 
-- Do all EP :)
+- I'm going to do the all ep :()
