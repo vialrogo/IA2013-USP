@@ -16,13 +16,16 @@ adjetivo(professor).
 adjetivo(professora).
 
 %Banco de conhecimento
+:- dynamic professor/1. %Por enquanto qualquer genero
+
 :- dynamic da/2.
 da(marcelo, mac239).
 
 :- dynamic eh/2.
 eh(mac425, [3, 5]).
 
-%:- dynamic sentenca/3.
+
+:- dynamic sentenca/3.
 %sentenca(X,L,G) :- 
 
 
