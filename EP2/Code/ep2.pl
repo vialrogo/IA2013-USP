@@ -1,48 +1,19 @@
 %Prolog
 
-%Base do conhecimento
-homem(americo).
-homem(daniel). 
-homem(paulo). 
-homem(carlos). 
-homem(joaquim). 
-homem(filipe). 
-homem(jorge).
-mulher(teresa). 
-mulher(sonia). 
-mulher(ana). 
-mulher(carla). 
-mulher(barbara). 
-mulher(maria). 
-mulher(thais).
-idade(americo, 18). 
-idade(daniel, 60). 
-idade(paulo, 25). 
-idade(carlos, 37). 
-idade(joaquim, 80). 
-idade(filipe, 32). 
-idade(jorge, 104).
-idade(teresa, 18). 
-idade(sonia, 28). 
-idade(ana, 17). 
-idade(carla, 26). 
-idade(barbara, 51). 
-idade(maria, 79). 
-idade(thais,103).
-irmaos(americo, paulo).
-irmaos(barbara,maria).
-irmaos(carlos, sonia). 
-pai(carlos, teresa). 
-pai(daniel, americo). 
-pai(daniel, paulo). 
-pai(joaquim, daniel).
-pai(jorge,joaquim). 
-mae(maria, daniel). 
-mae(barbara, ana). 
-casados(filipe, carla). 
-casados(americo,teresa). 
-casados(joaquim, maria).
-casados(jorge,thais).
+% IME-USP
+% Mestrado em Ciência da Computação
+% Disciplina: Inteligência Artificial
+% Exercício-Programa 2 (DCC-IME)
+% Alunos: 
+% 	    Monna Cleide Santos   - n. USP 8477852
+% 	    Victor Alberto Romero - n. USP 8405274
+%
+% 25 de novembro de 2013
+%
+
+%Base de conhecimento
+
+
 
 % (a) avof(Mul, Pess) em que Mul seja avó de Pess.
 avof(Mul,Pess) :- mae(Mul,X), pai(X,Pess).
