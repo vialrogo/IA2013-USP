@@ -49,7 +49,7 @@ convertDia(sextas, 6).
 convertDia(sabados, 7).
 convertDia(domingos, 1).
 
-%Converte uma lista de dias, numa lista de números e apaga as conuunções
+%Converte uma lista de dias numa lista de números e apaga as conjunções
 convertLD([],[]).
 convertLD([H | []], [Hc | []]) :- convertDia(H, Hc), !.
 convertLD( [H, _ |T], [Hc|Tc]) :- convertDia(H, Hc), convertLD(T, Tc).
