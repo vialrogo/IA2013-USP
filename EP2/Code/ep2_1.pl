@@ -1,8 +1,5 @@
 %Prolog
 
-%Base do conhecimento
-% TODO
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% Primeira parte %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -15,34 +12,39 @@ artigo(o).
 adjetivo(professor).
 adjetivo(professora).
 
+%Verbos conjugados
+verbo(da).
+
+%Ponto
+ponto('.').
+
 %Banco de conhecimento
 :- dynamic professor/1. %Por enquanto qualquer genero
-professor(marcelo).
 
-:- dynamic disciplina/1
-
+:- dynamic disciplina/1.
 
 :- dynamic da/2.
-da(marcelo, mac239).
 
 :- dynamic eh/2.
-eh(mac425, [3, 5]).
 
+sentenca(X,[Ar,Ad,Pr,Vr,Di,Po],G) :- artigo(Ar),adjetivo(Ad),
+                                     verbo(Vr),ponto(Po),
+                                     asserta(professor(Pr)),
+                                     asserta(disciplina(Di)),
+                                     asserta(da(Pr,Di)).
+                                     
 
-:- dynamic sentenca/3.
-%sentenca(X,L,G) :- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Segunda parte %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+downCaseList([],[]).
+downCaseList([H|T], [Hl|Tl]) :- downcase_atom(H,Hl), downCaseList(T, Tl).
 
+monta_lista(L) :- readln(X), downCaseList(X,L).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%% Primeira parte %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Terceira parte %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Fibonaci
-:- dynamic fibo/2.
-fibo(0, 1).
-fibo(1, 1).
-fibo(N, F) :- N >= 2, N1 is N - 1, N2 is N - 2,
-              fibo(N1, F1), fibo(N2, F2), F is F1 + F2,
-              asserta(fibo(N,F):-!). % adiciona no inicio
