@@ -1,0 +1,34 @@
+Ponto 1
+^^^^^^^
+sentenca(X,[o,professor,marcelo,da,mac239,'.'],[]).
+sentenca(X,[a,professora,renata,da,mac425,'.'],[]).
+sentenca(X,[mac425,eh,aas,tercas,e,quintas,'.'],[]).
+sentenca(X,[a,professora,leliane,da,mac122,aas,segundas,e,quintas,'.'],[]).
+
+Ponto 2
+^^^^^^^
+O professor Marcelo da mac239.
+A professora Renata da mac425.
+Mac425 eh aas tercas e quintas.
+Quem da mac425?
+
+Ponto 3
+^^^^^^^
+O professor Marcelo da mac239.
+O professor Carlos da mac239.
+A professora Maria da mac123.
+A professora Carla da mac678.
+Mac239 eh aas tercas e quintas.
+Mac123 eh aas segundas e tercas e quintas.
+Mac678 eh aas tercas.
+Mac425 eh aas tercas e sextas.
+A professora Leliane da mac122 aas segundas e quintas.
+A professora Carla da mac233 aas segundas e quartas.
+O professor Gustavo da mac455 aas quintas e sabados.
+
+Quem da mac239?
+Quem da o que?
+Quando eh mac122?
+O que a professora Carla da?
+O que o professor Carlos da?
+Quem da o que e quando?
