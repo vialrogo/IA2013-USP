@@ -119,6 +119,10 @@ revertDias([H|T],S)    :-   convertDia(D,H), revertDias(T,R),
 %Função auxiliar para calcular bem os dias
 ehComDias(Di,Ho,Hp) :- eh(Di,Ho), revertDias(Ho,Hp).
 
+%Função auxiliar para calcular bem os dias e os professores tudo junto :D
+daProfessorComDias(Pr,Di,Ho,Hp)  :- professor(Pr), da(Pr,Di), eh(Di,Ho), revertDias(Ho,Hp). 
+daProfessoraComDias(Pr,Di,Ho,Hp) :- professora(Pr),da(Pr,Di), eh(Di,Ho), revertDias(Ho,Hp). 
+
 %Funções auxiliares para saber que da um professor ou professora
 daProfessor(Pr,Di)  :- professor(Pr), da(Pr,Di).
 daProfessora(Pr,Di) :- professora(Pr), da(Pr,Di).
@@ -174,6 +178,18 @@ responder([o, que, a, professora, Pr, da]) :- findall([Pr,Di], daProfessora(Pr,D
                                               montarListaS('A professora %w da %w.\n',L,S),
                                               maplist(writef,S,L).
 
-%Conlusta ao programa
+% Conlusta: "Quem da o que e quando?"
+% Resposta: O professor xxx da macyyy as www e rrr
+responder([quem, da, o, que, e, quando]) :- findall([Pr,Di,Hp], daProfessorComDias(Pr,Di,_,Hp), L),
+                                            montarListaS('O professor %w da %w aas %w.\n',L,S),
+                                            maplist(writef,S,L).
+
+% Conlusta: "Quem da o que e quando?"
+% Resposta: A professora xxx da macyyy as www e rrr
+responder([quem, da, o, que, e, quando]) :- findall([Pr,Di,Hp], daProfessoraComDias(Pr,Di,_,Hp), L),
+                                            montarListaS('A professora %w da %w aas %w.\n',L,S),
+                                            maplist(writef,S,L).
+
+%Consulta ao programa
 consulta :- monta_lista(L), sentenca(_,L,_).
 
